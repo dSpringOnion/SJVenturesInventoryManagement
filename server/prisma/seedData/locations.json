@@ -1,0 +1,10 @@
+[
+  {
+    "locationId": "warehouse-id",
+    "name": "Warehouse"
+  },
+  {
+    "locationId": "location-id-1",
+    "name": "Store 1"
+  }
+]

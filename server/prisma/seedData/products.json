@@ -1,0 +1,25 @@
+[
+  {
+    "productId": "product-id-1",
+    "name": "Product 1",
+    "chineseName": "产品一",
+    "price": 10.0,
+    "minimumStock": 5,
+    "vendorId": "vendor-id-1"
+  },
+  {
+    "productId": "product-id-2",
+    "name": "Product 2",
+    "chineseName": "产品二",
+    "price": 15.0,
+    "minimumStock": 10,
+    "vendorId": "vendor-id-2"
+  },
+  {
+    "productId": "product-id-3",
+    "name": "Product 3",
+    "price": 20.0,
+    "minimumStock": 7,
+    "vendorId": null
+  }
+]

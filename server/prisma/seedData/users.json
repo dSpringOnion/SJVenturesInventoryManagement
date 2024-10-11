@@ -1,0 +1,18 @@
+[
+  {
+    "userId": "u1",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "hashedpassword123",
+    "role": "ADMIN",
+    "locationId": "l1"
+  },
+  {
+    "userId": "u2",
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "password": "hashedpassword456",
+    "role": "MANAGER",
+    "locationId": "l2"
+  }
+]

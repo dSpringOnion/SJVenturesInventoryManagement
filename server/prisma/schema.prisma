@@ -1,0 +1,95 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MANAGER
+  AREA_MANAGER
+  ADMIN
+}
+
+enum InvoiceStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SENT_TO_VENDOR
+}
+
+model User {
+  userId     String    @id @default(cuid())
+  name       String
+  email      String    @unique
+  password   String
+  role       Role      @default(MANAGER)
+  location   Location? @relation(fields: [locationId], references: [locationId])
+  locationId String?
+  invoices   Invoice[]
+
+  // Relations
+  // managers can create invoices
+  // admins handle invoice approval and sending to vendors
+}
+
+model Location {
+  locationId   String              @id @default(cuid())
+  name         String              @unique
+  managers     User[]
+  stockLevels  ProductStockLevel[]
+  invoices     Invoice[]
+}
+
+model Vendor {
+  vendorId  String     @id @default(cuid())
+  name      String
+  isActive  Boolean    @default(true)
+  products  Product[]
+}
+
+model Product {
+  productId     String                @id @default(cuid())
+  name          String
+  chineseName   String?
+  price         Float
+  minimumStock  Int?
+  vendor        Vendor?               @relation(fields: [vendorId], references: [vendorId])
+  vendorId      String?
+  stockLevels   ProductStockLevel[]
+  invoiceItems  InvoiceItem[]
+}
+
+model ProductStockLevel {
+  id           String     @id @default(cuid())
+  product      Product   @relation(fields: [productId], references: [productId])
+  productId    String
+  location     Location  @relation(fields: [locationId], references: [locationId])
+  locationId   String
+  stockQuantity Int
+}
+
+model Invoice {
+  invoiceId   String       @id @default(cuid())
+  manager     User         @relation(fields: [managerId], references: [userId])
+  managerId   String
+  location    Location     @relation(fields: [locationId], references: [locationId])
+  locationId  String
+  createdAt   DateTime     @default(now())
+  status      InvoiceStatus @default(PENDING)
+  items       InvoiceItem[]
+}
+
+model InvoiceItem {
+  invoiceItemId String    @id @default(cuid())
+  invoice       Invoice   @relation(fields: [invoiceId], references: [invoiceId])
+  invoiceId     String
+  product       Product   @relation(fields: [productId], references: [productId])
+  productId     String
+  quantity      Int
+  amount        Float     // Add this field to store price * quantity
+}
