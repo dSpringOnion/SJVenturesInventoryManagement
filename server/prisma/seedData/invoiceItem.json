@@ -3,6 +3,7 @@
     "invoiceItemId": "invoice-item-id-1",
     "invoiceId": "invoice-id-1",
     "productId": "product-id-1",
-    "quantity": 10
+    "quantity": 10,
+    "amount": 100.00
   }
 ]
