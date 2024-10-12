@@ -2,13 +2,13 @@
   {
     "id": "stock-level-id-1",
     "productId": "product-id-1",
-    "locationId": "warehouse-id",
+    "locationId": "l1",
     "stockQuantity": 100
   },
   {
     "id": "stock-level-id-2",
     "productId": "product-id-1",
-    "locationId": "location-id-1",
+    "locationId": "l1",
     "stockQuantity": 20
   }
 ]

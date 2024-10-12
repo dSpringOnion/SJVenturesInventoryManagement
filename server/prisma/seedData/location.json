@@ -1,11 +1,10 @@
 [
   {
-    "name": "Main Warehouse"
+    "locationId": "l1",
+    "name": "Warehouse"
   },
   {
-    "name": "Downtown Store"
-  },
-  {
-    "name": "Suburban Store"
+    "locationId": "l2",
+    "name": "Store 1"
   }
 ]
