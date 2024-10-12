@@ -1,5 +1,3 @@
-// seed.ts
-
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import fs from "fs";
@@ -21,7 +19,7 @@ async function deleteAllData(orderedFileNames: string[]) {
       console.log(`Cleared data from ${modelName}`);
     } else {
       console.error(
-        `Model ${modelName} not found. Please ensure the model name is correctly specified.`
+          `Model ${modelName} not found. Please ensure the model name is correctly specified.`
       );
     }
   }
@@ -31,18 +29,36 @@ async function main() {
   const dataDirectory = path.join(__dirname, "seedData");
 
   const orderedFileNames = [
-    "users.json",
-    "locations.json",
-    "vendors.json",
-    "products.json",
-    "productStockLevels.json",
-    "invoices.json",
-    "invoiceItems.json",
+    "locationrem.json", // Seed locations first
+    "user.json",     // Then seed users
+    "vendor.json",
+    "product.json",
+    "productStockLevel.json",
+    "invoice.json",
+    "invoiceItem.json",
   ];
 
   await deleteAllData(orderedFileNames);
 
-  // Seed Users with password hashing
+  // Seed Locations first
+  const locationsFilePath = path.join(dataDirectory, "locations.json");
+  if (fs.existsSync(locationsFilePath)) {
+    const locationsData = JSON.parse(fs.readFileSync(locationsFilePath, "utf-8"));
+    for (const location of locationsData) {
+      try {
+        await prisma.location.create({
+          data: location,
+        });
+      } catch (error) {
+        console.error(`Error seeding Locations:`, error);
+      }
+    }
+    console.log(`Seeded Locations with data from locations.json`);
+  } else {
+    console.error(`File not found: locations.json`);
+  }
+
+  // Seed Users with password hashing after locations
   const usersFilePath = path.join(dataDirectory, "users.json");
   if (fs.existsSync(usersFilePath)) {
     const usersData = JSON.parse(fs.readFileSync(usersFilePath, "utf-8"));
@@ -65,7 +81,7 @@ async function main() {
   }
 
   // Seed the rest of the data
-  for (const fileName of orderedFileNames.slice(1)) {
+  for (const fileName of orderedFileNames.slice(2)) { // Start after users.json
     const filePath = path.join(dataDirectory, fileName);
     if (!fs.existsSync(filePath)) {
       console.error(`File not found: ${fileName}`);
@@ -75,7 +91,7 @@ async function main() {
     const jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
     const modelName = path.basename(fileName, path.extname(fileName));
     const prismaModelName =
-      modelName.charAt(0).toLowerCase() + modelName.slice(1);
+        modelName.charAt(0).toLowerCase() + modelName.slice(1);
 
     const model = (prisma as any)[prismaModelName];
 
@@ -90,17 +106,17 @@ async function main() {
       }
     } else {
       console.error(
-        `Model ${modelName} not found or createMany not supported. Please ensure the model name is correctly specified.`
+          `Model ${modelName} not found or createMany not supported. Please ensure the model name is correctly specified.`
       );
     }
   }
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+    .catch((e) => {
+      console.error(e);
+      process.exit(1);
+    })
+    .finally(async () => {
+      await prisma.$disconnect();
+    });
