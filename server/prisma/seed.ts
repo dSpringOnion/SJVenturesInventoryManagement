@@ -29,7 +29,7 @@ async function main() {
   const dataDirectory = path.join(__dirname, "seedData");
 
   const orderedFileNames = [
-    "locationrem.json", // Seed locations first
+    "location.json", // Seed locations first
     "user.json",     // Then seed users
     "vendor.json",
     "product.json",
@@ -41,7 +41,7 @@ async function main() {
   await deleteAllData(orderedFileNames);
 
   // Seed Locations first
-  const locationsFilePath = path.join(dataDirectory, "locations.json");
+  const locationsFilePath = path.join(dataDirectory, "location.json");
   if (fs.existsSync(locationsFilePath)) {
     const locationsData = JSON.parse(fs.readFileSync(locationsFilePath, "utf-8"));
     for (const location of locationsData) {
