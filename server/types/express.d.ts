@@ -9,7 +9,7 @@ declare global {
       userId: string;
       name: string;
       email: string;
-      role: "ADMIN" | "MANAGER"; // Adjust roles as per your application
+      role: "ADMIN" | "MANAGER" | "AREA_MANAGER"; // Include all roles
       locationId?: string; // Optional if not all users have a location
       // Add any other properties your User object has
     }
@@ -28,8 +28,8 @@ declare global {
 
     // Extend the Request interface to include user and product
     interface Request {
-      user?: User;
-      product?: Product;
+      user?: User; // Adding user property to req object
+      product?: Product; // Adding product property to req object
       // Add any other custom properties here
     }
   }
