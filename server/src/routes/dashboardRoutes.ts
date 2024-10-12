@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { getDashboardMetrics } from "../controllers/dashboardController";
+import { getLowStockProducts } from "../controllers/dashboardController";
 
 const router = Router();
 
-router.get("/", getDashboardMetrics);
+// Route to get low stock products
+router.get("/low-stock", getLowStockProducts);
 
 export default router;
