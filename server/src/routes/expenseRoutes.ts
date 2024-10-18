@@ -7,6 +7,6 @@ import { authorizeRoles } from "../middleware/authorizeRoles"; // Add this for r
 
 const router = Router();
 
-router.get("/", authenticateToken, authorizeRoles(["ADMIN", "MANAGER"]), getExpenseSummary); // Restrict to certain roles if necessary
+router.get("/expenses", authenticateToken, authorizeRoles(["ADMIN", "MANAGER"]), getExpenseSummary); // Restrict to certain roles if necessary
 
 export default router;

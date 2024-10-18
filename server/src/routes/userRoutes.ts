@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/signup", signup);
 router.post("/login", login);
-router.get("/", authenticateToken, authorizeRoles(["ADMIN"]), getUsers); // Restrict this to admins if necessary
+router.get("/users", authenticateToken, authorizeRoles(["ADMIN"]), getUsers); // Restrict this to admins if necessary
 
 export default router;
