@@ -83,7 +83,7 @@ const Sidebar = () => {
       >
         <Image
           src="https://sj-inv-managment.s3.us-east-2.amazonaws.com/SJ.png"
-          alt="edstock-logo"
+          alt="SJ"
           width={27}
           height={27}
           className="rounded w-8"
