@@ -1,14 +1,16 @@
-// routes/userRoutes.ts
-
 import express from "express";
 import { signup, login, getUsers } from "../controllers/userController";
-import { authenticateToken } from "../middleware/authMiddleware";
-import { authorizeRoles } from "../middleware/authorizeRoles"; // Add this for role-based access
+import { authenticateToken } from "../middleware/authMiddleware";  // Middleware to verify JWT tokens
 
 const router = express.Router();
 
+// Route for user signup
 router.post("/signup", signup);
+
+// Route for user login
 router.post("/login", login);
-router.get("/users", authenticateToken, authorizeRoles(["ADMIN"]), getUsers); // Restrict this to admins if necessary
+
+// Protected route to get all users (Admin only)
+router.get("/", authenticateToken, getUsers);
 
 export default router;
