@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetProductsQuery } from "../../../state/api"; // Import the RTK query hook
+import { useGetProductsQuery } from "@/state/api"; // Import the RTK query hook
 import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
 import SortOptions from "./SortOptions";

@@ -39,9 +39,9 @@ const createNoopStorage = () => {
 };
 
 const storage =
-  typeof window === "undefined"
-    ? createNoopStorage()
-    : createWebStorage("local");
+    typeof window === "undefined"
+        ? createNoopStorage()
+        : createWebStorage("local");
 
 const persistConfig = {
   key: "root",
@@ -59,11 +59,11 @@ export const makeStore = () => {
   return configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        },
-      }).concat(api.middleware),
+        getDefaultMiddleware({
+          serializableCheck: {
+            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+          },
+        }).concat(api.middleware),
   });
 };
 
@@ -76,8 +76,8 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 /* PROVIDER */
 export default function StoreProvider({
-  children,
-}: {
+                                        children,
+                                      }: {
   children: React.ReactNode;
 }) {
   const storeRef = useRef<AppStore>();
@@ -88,10 +88,10 @@ export default function StoreProvider({
   const persistor = persistStore(storeRef.current);
 
   return (
-    <Provider store={storeRef.current}>
-      <PersistGate loading={null} persistor={persistor}>
-        {children}
-      </PersistGate>
-    </Provider>
+      <Provider store={storeRef.current}>
+        <PersistGate loading={null} persistor={persistor}>
+          {children}
+        </PersistGate>
+      </Provider>
   );
 }
