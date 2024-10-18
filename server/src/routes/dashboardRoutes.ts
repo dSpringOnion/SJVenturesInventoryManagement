@@ -8,6 +8,6 @@ import { authorizeRoles } from "../middleware/authorizeRoles"; // Add role-based
 const router = Router();
 
 // Route to get low stock products
-router.get("/low-stock", authenticateToken, authorizeRoles(["ADMIN", "MANAGER"]), getLowStockProducts); // Restrict to admins or managers
+router.get("/dashboard", authenticateToken, authorizeRoles(["ADMIN", "MANAGER"]), getLowStockProducts); // Restrict to admins or managers
 
 export default router;
