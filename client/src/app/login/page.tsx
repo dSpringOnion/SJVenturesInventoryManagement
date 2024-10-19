@@ -17,7 +17,7 @@ const Login = () => {
         setError("");
 
         try {
-            const response = await fetch("http://18.191.222.14/login", {
+            const response = await fetch("http://18.191.222.14:8000/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -30,10 +30,11 @@ const Login = () => {
             }
 
             const data = await response.json();
-            // Handle the token or user data
-            // Save the token (e.g., in local storage or cookie)
+            // Save the token to localStorage or a cookie, as needed
+            localStorage.setItem("token", data.token);
 
-            router.push("/dashboard"); // Redirect to dashboard after successful login
+            // Redirect to dashboard after successful login
+            router.push("/dashboard");
         } catch (err: any) {
             setError(err.message || "Something went wrong");
         } finally {

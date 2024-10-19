@@ -18,7 +18,7 @@ const Signup = () => {
         setError("");
 
         try {
-            const response = await fetch("/api/auth/signup", {
+            const response = await fetch("http://18.191.222.14:8000/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
