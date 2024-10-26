@@ -16,6 +16,9 @@ export const authenticateToken = (
     res: Response,
     next: NextFunction
 ) => {
+  // Set Content Security Policy headers
+  res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self';");
+
   const authHeader = req.headers["authorization"];
   const token = authHeader?.split(" ")[1];
 
