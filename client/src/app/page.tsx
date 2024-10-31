@@ -22,7 +22,7 @@ export default function Home() {
   // Redirect to login page if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/login"); // Redirect to login page if not authenticated
+      router.push("/Login"); // Redirect to login page if not authenticated
     }
   }, [isAuthenticated, router]);
 

@@ -10,6 +10,7 @@ import productRoutes from "./routes/productRoutes";
 import userRoutes from "./routes/userRoutes";
 import expenseRoutes from "./routes/expenseRoutes";
 import vendorRoutes from "./routes/vendorRoutes"; // Import the new vendor routes
+import invoiceRoutes from "./routes/invoiceRoutes";
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -30,6 +31,7 @@ app.use("/expenses", expenseRoutes); // http://localhost:8000/expenses
 app.use("/vendors", vendorRoutes); // http://localhost:8000/vendors (New route for managing vendors)
 app.use("/login", userRoutes); // http://localhost:8000/login
 app.use("/signup", userRoutes);
+app.use("/invoice", invoiceRoutes)
 
 /* SERVER */
 const port = Number(process.env.PORT) || 8000;

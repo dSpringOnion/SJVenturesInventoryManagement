@@ -113,7 +113,7 @@ const Sidebar = () => {
           isCollapsed={isSidebarCollapsed}
         />
         <SidebarLink
-          href="/inventory"
+          href="/vendors"
           icon={Archive}
           label="Vendors"
           isCollapsed={isSidebarCollapsed}
@@ -123,6 +123,12 @@ const Sidebar = () => {
           icon={Clipboard}
           label="Products"
           isCollapsed={isSidebarCollapsed}
+        />
+        <SidebarLink
+            href="/expenses"
+            icon={Layout}
+            label="Expenses"
+            isCollapsed={isSidebarCollapsed}
         />
         <SidebarLink
           href="/users"
@@ -137,7 +143,7 @@ const Sidebar = () => {
           isCollapsed={isSidebarCollapsed}
         />
         <SidebarLink
-          href="/expenses"
+          href="/invoices"
           icon={CircleDollarSign}
           label="Generate Invoice"
           isCollapsed={isSidebarCollapsed}
