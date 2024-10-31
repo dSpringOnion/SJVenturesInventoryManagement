@@ -66,7 +66,7 @@ client/src/app/(components)/pageSearch/SearchBar.tsx
 client/src/app/(components)/pageSearch/SortOptions.tsx
 client/src/app/(components)/Rating/index.tsx
 client/src/app/(components)/Sidebar/index.tsx
-client/src/app/dashboard/CardExpenseSummary.tsx
+client/src/app/dashboard/LowStockCard.tsx
 client/src/app/dashboard/CardSalesSummary.tsx
 client/src/app/dashboard/page.tsx
 client/src/app/dashboard/StatCard.tsx
@@ -794,7 +794,7 @@ const Sidebar = () => {
 export default Sidebar;
 
 ================
-File: client/src/app/dashboard/CardExpenseSummary.tsx
+File: client/src/app/dashboard/LowStockCard.tsx
 ================
 "use client";
 
