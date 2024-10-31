@@ -1,10 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useGetInvoicesQuery, useGetVendorsQuery, useCreateInvoiceMutation } from "@/state/api";
+import { useState } from "react";
+import {
+    useGetInvoicesQuery,
+    useGetVendorsQuery,
+    useCreateInvoiceMutation,
+} from "@/state/api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
+
+interface NewInvoiceItem {
+    productId: string;
+    quantity: number;
+}
 
 const Expenses = () => {
     const router = useRouter();
@@ -12,11 +21,19 @@ const Expenses = () => {
     const [locationId, setLocationId] = useState("");
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
-    const [invoiceItems, setInvoiceItems] = useState([]);
+    const [invoiceItems, setInvoiceItems] = useState<NewInvoiceItem[]>([]);  // Explicitly typed as NewInvoiceItem[]
     const [isCreating, setIsCreating] = useState(false);
 
+    const formattedStartDate = startDate ? startDate.toISOString() : undefined;
+    const formattedEndDate = endDate ? endDate.toISOString() : undefined;
+
     // Fetch invoices, vendors, and locations data
-    const { data: invoices, isLoading, isError } = useGetInvoicesQuery({ vendorId, locationId, startDate, endDate });
+    const { data: invoices, isLoading, isError } = useGetInvoicesQuery({
+        vendorId,
+        locationId,
+        startDate: formattedStartDate,
+        endDate: formattedEndDate,
+    });
     const { data: vendors } = useGetVendorsQuery();
     const [createInvoice, { isLoading: isCreatingInvoice }] = useCreateInvoiceMutation();
 
@@ -26,9 +43,9 @@ const Expenses = () => {
     };
 
     // Handle invoice item change
-    const handleInvoiceItemChange = (index: number, field: string, value: any) => {
+    const handleInvoiceItemChange = (index: number, field: keyof NewInvoiceItem, value: any) => {
         const items = [...invoiceItems];
-        items[index][field] = value;
+        items[index] = { ...items[index], [field]: value };  // Ensure items are NewInvoiceItem objects
         setInvoiceItems(items);
     };
 
@@ -38,7 +55,7 @@ const Expenses = () => {
         try {
             await createInvoice({
                 locationId,
-                items: invoiceItems
+                items: invoiceItems,
             });
             alert("Invoice created successfully!");
             setInvoiceItems([]);
@@ -106,7 +123,7 @@ const Expenses = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {invoices?.map((invoice) => (
+                        {invoices?.data.map((invoice) => (
                             <tr key={invoice.invoiceId} className="border-b">
                                 <td className="p-4">{invoice.invoiceId}</td>
                                 <td className="p-4">{invoice.vendor?.name || "Unknown"}</td>

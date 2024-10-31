@@ -5,3 +5,5 @@ server/dist/
 client/.env.local/
 server/.env/
 client/.next/
+.aider*
+.env

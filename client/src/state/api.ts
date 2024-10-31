@@ -1,12 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export type Role = "MANAGER" | "AREA_MANAGER" | "ADMIN";
-
-export type InvoiceStatus =
-  | "PENDING"
-  | "APPROVED"
-  | "REJECTED"
-  | "SENT_TO_VENDOR";
+export type InvoiceStatus = "PENDING" | "APPROVED" | "REJECTED" | "SENT_TO_VENDOR";
 
 export interface User {
   userId: string;
@@ -44,6 +39,11 @@ export interface InvoiceItem {
   product?: Product;
 }
 
+export interface NewInvoiceItem {
+  productId: string;
+  quantity: number;
+}
+
 export interface Invoice {
   invoiceId: string;
   managerId: string;
@@ -53,6 +53,13 @@ export interface Invoice {
   items?: InvoiceItem[];
   manager?: User;
   location?: Location;
+  vendorId?: string; // Add this if the invoice is directly associated with a vendor
+  vendor?: Vendor;   // Add this to include vendor details
+}
+
+export interface NewInvoice {
+  locationId: string;
+  items: NewInvoiceItem[];
 }
 
 export interface Location {
@@ -126,8 +133,8 @@ export const api = createApi({
   endpoints: (build) => ({
     // Fetch low stock products
     getLowStockProducts: build.query<
-      ProductsResponse,
-      GetProductsParams | void
+        ProductsResponse,
+        GetProductsParams | void
     >({
       query: (params) => ({
         url: "/products/low-stock",
@@ -181,6 +188,16 @@ export const api = createApi({
       query: () => "/locations",
       providesTags: ["Locations"],
     }),
+
+    // Create a new invoice
+    createInvoice: build.mutation<Invoice, NewInvoice>({
+      query: (newInvoice) => ({
+        url: "/invoices",
+        method: "POST",
+        body: newInvoice,
+      }),
+      invalidatesTags: ["Invoices"],
+    }),
   }),
 });
 
@@ -189,7 +206,8 @@ export const {
   useGetProductsQuery,
   useCreateProductMutation,
   useGetUsersQuery,
-  useGetInvoicesQuery, // <--- New Hook for fetching invoices
-  useGetVendorsQuery, // <--- New Hook for fetching vendors
-  useGetLocationsQuery, // <--- New Hook for fetching locations
+  useGetInvoicesQuery,
+  useGetVendorsQuery,
+  useGetLocationsQuery,
+  useCreateInvoiceMutation,
 } = api;
